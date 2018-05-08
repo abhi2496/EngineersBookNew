@@ -1,0 +1,40 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10"
+    tools:context="com.example.abhishekkoranne.engineersbook.Fragment.DoubtsFragment">
+
+    <SearchView
+        android:id="@+id/sv_doubts"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="8dp"
+        android:layout_weight="1"
+        android:background="@drawable/search_bar_drawable"
+        android:queryHint="Search Questions"></SearchView>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@id/sv_doubts"
+        android:layout_weight="9"
+        android:id="@+id/rv_doubts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_ask_doubt"
+        android:layout_gravity="end"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        app:fabSize="normal"
+        android:src="@drawable/ic_add_white_18dp"
+        app:rippleColor="#2c7ea7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

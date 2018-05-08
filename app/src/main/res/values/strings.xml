@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">Engineers Book</string>
+    <string name="select_your_role">Select Your Role</string>
+    <string name="role0">Student</string>
+    <string name="role1">Faculty</string>
+    <string name="role2">HOD</string>
+    <string name="role3">Principal</string>
+    <string name="role4">Chancellor</string>
+
+    <string-array name="user_name">
+        <item>Jigish</item>
+        <item>Manjul</item>
+    </string-array>
+
+    <string-array name="time_stamp">
+        <item>24 Nov at 8:55 pm</item>
+        <item>21 Nov at 6:19 pm</item>
+    </string-array>
+
+    <string-array name="text_post">
+    <item>This is post1 who you are? Hope you are doing well!
+        Hope you are doing well!
+        Hope you are doing well!
+        Hope you are doing well!
+        Hope you are doing well!
+        Hope you are doing well!
+        Hope you are doing well!
+        Hope you are doing well!
+        Hope you are doing well!</item>
+        <item>This is post2...How are you? Good to see after long time
+        Good to see after long time
+        Good to see after long time
+        Good to see after long time
+        Good to see after long time
+        Good to see after long time
+        Good to see after long time
+        Good to see after long time.</item>
+    </string-array>
+
+    <string-array name="no_of_comments">
+        <item>5 Comments</item>
+        <item>6 Comments</item>
+    </string-array>
+    <string-array name="no_of_shares">
+        <item>4 Shares</item>
+        <item>3 Shares</item>
+    </string-array>
+
+    <string-array name="doubt_question">
+        <item>Load Trie into Memory</item>
+        <item>Real-time Chart Update with D3js</item>
+    </string-array>
+
+    <string-array name="doubt_question_tag">
+        <item>javascript-d3.js</item>
+        <item>Java</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

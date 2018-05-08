@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/profile_activity_gradient"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/rounded_border_background_white" />
+
+
+    <ImageView
+        android:id="@+id/iv_profile"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="260dp"
+        android:background="#ffffff" />
+
+ <!--   <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/view2"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Your Dashboard"
+        android:textColor="#b9000000"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+-->
+
+    <TextView
+        android:id="@+id/tv_companyname"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_profile"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="Tata Consultancy Limited"
+        android:textColor="#c1000000"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_companyaddress"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_companyname"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="Gandhinagar, Gujarat"
+        android:textColor="#b5000000"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/edit_profile"
+        android:layout_width="36dp"
+        android:layout_height="42dp"
+        android:layout_alignTop="@+id/view"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="2dp"
+        android:layout_toEndOf="@+id/tv_companyname"
+        android:drawableStart="@drawable/ic_mode_edit_black_18dp" />
+    <view
+        android:id="@+id/mytabs"
+        class="android.support.design.widget.TabLayout"
+        id="@+id/tview"
+        layout_centerHorizontal="true"
+        layout_marginTop="31dp"
+        android:layout_below="@id/view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/profile_activity_gradient"
+        android:textColor="#ffffff"
+        app:tabGravity="fill"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="#ffffff"
+        app:tabTextColor="#96ffffff" />
+    <!--android:background="@color/colorTab"
+    layout_alignParentTop="true"-->
+    <view
+        android:id="@+id/mypager"
+        class="android.support.v4.view.ViewPager"
+        id="@+id/view6"
+        layout_below="@+id/view"
+        layout_centerHorizontal="true"
+        layout_marginTop="34dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mytabs" />
+
+
+</RelativeLayout>

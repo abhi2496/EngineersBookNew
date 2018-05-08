@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.abhishekkoranne.engineersbook.Activity.AddDoubtActivity">
+
+    <Spinner
+        android:id="@+id/tags_filter_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"></Spinner>
+
+    <EditText
+        android:id="@+id/doubt_title"
+        android:textColorHint="#c51f2d80"
+        android:paddingTop="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rectangular_edit_text"
+        android:hint="Title"
+        android:inputType="textMultiLine"
+        android:paddingBottom="8dp"
+        android:textColor="#c51f2d80"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/doubt_body"
+        android:textColorHint="#c51f2d80"
+        android:paddingTop="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="218dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rectangular_edit_text"
+        android:hint="Body"
+        android:inputType="textMultiLine"
+        android:paddingBottom="8dp"
+        android:textColor="#c51f2d80"
+        android:textSize="18sp" />
+
+    <TextView
+        android:layout_marginTop="16dp"
+        android:textColor="#c51f2d80"
+        android:textSize="20sp"
+        android:layout_marginRight="16dp"
+        android:layout_gravity="right"
+        android:text="Add Image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_marginBottom="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rectangular_edit_text"
+        android:text="Submit"
+        android:textColor="#c51f2d80"
+        android:textSize="20sp" />
+
+</LinearLayout>

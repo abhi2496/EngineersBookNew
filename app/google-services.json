@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "202109657026",
+    "firebase_url": "https://engineers-book.firebaseio.com",
+    "project_id": "engineers-book",
+    "storage_bucket": "engineers-book.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:202109657026:android:fa2bd5f432d8a49e",
+        "android_client_info": {
+          "package_name": "com.example.abhishekkoranne.engineersbook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "202109657026-6sr61rdiichhhsvlf0rbabq9d4vc1uph.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBodhEf97lPbn4RRiy6NJQ6IdPhiCi52Mk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
