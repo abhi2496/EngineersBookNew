@@ -59,6 +59,18 @@ public interface APIManager {
     @POST(Constant.URL_FACULTY_REG)
     Call<Map<String, Object>> registerFaculty(@PartMap Map<String, RequestBody> partMap);
 
+    @Multipart
+    @POST(Constant.URL_HOD_REG)
+    Call<Map<String, Object>> registerHOD(@PartMap Map<String, RequestBody> partMap);
+
+    @Multipart
+    @POST(Constant.URL_PRINCIPAL_REG)
+    Call<Map<String, Object>> registerPrincipal(@PartMap Map<String, RequestBody> partMap);
+
+    @Multipart
+    @POST(Constant.URL_CHANCELLOR_REG)
+    Call<Map<String, Object>> registerChancellor(@PartMap Map<String, RequestBody> partMap);
+
     @FormUrlEncoded
     @POST(Constant.URL_FORGOT_PASS)
     Call<Map<String, Object>> forgotPass(@FieldMap Map<String, String> params);

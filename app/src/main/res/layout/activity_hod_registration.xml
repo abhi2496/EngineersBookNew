@@ -12,6 +12,45 @@
         android:orientation="vertical"
         tools:context="com.example.jiggy.askbindaas.activity.HODRegistrationActivity">
 
+        <ImageView
+            android:id="@+id/img_preview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="clip_horizontal"
+            android:scaleType="centerCrop"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="24dp"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Upload your Photo : "
+                android:textSize="20sp"
+                android:layout_weight="1"
+                android:textColor="@color/colorPrimary"/>
+
+            <Button
+                android:id="@+id/btn_browse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Browse"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                android:textColor="#ffffff"
+                android:background="@drawable/button_design"/>
+
+
+        </LinearLayout>
+
+
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -159,6 +198,7 @@
                 android:textColor="#c51f2d80"
                 android:textSize="20dp" /></android.support.design.widget.TextInputLayout>
 
+<!--
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -204,6 +244,58 @@
                 android:inputType="text"
                 android:textColor="#c51f2d80"
                 android:textSize="20dp" /></android.support.design.widget.TextInputLayout>
+-->
+        <Spinner
+            android:id="@+id/univ_spin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
+
+        <Spinner
+            android:id="@+id/col_spin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
+
+       <!-- <Spinner
+            android:id="@+id/dept_spin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
+-->
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/et_dept_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="8dp"
+                android:hint="Deparment Id"
+                android:textColor="#c51f2d80"
+                android:textSize="20dp" /></android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/et_dept_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="8dp"
+                android:hint="Deparment Name"
+                android:textColor="#c51f2d80"
+                android:textSize="20dp" /></android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -232,6 +324,7 @@
                 android:layout_marginTop="8dp"
                 android:hint="Confirm Password"
                 android:textColor="#c51f2d80"
+                android:inputType="textPassword"
                 android:textSize="20dp" /></android.support.design.widget.TextInputLayout>
 
         <Button
@@ -244,6 +337,7 @@
             android:background="@drawable/button_design"
             android:text="Register"
             android:textSize="20sp"
+            android:onClick="hodreg"
             android:textColor="#ffffff" />
 
 

@@ -285,6 +285,7 @@ public class FacultyRegistrationActivity extends AppCompatActivity {
         partMap.put("colg_name", RequestBody.create(MediaType.parse("text/plain"), c));
         partMap.put("univ_name", RequestBody.create(MediaType.parse("text/plain"), u));
         partMap.put("pass", RequestBody.create(MediaType.parse("text/plain"), et_password.getText().toString()));
+        partMap.put("user_type", RequestBody.create(MediaType.parse("text/plain"), "faculty"));
 
 
 //        Map<String, Object> params = new HashMap<>();

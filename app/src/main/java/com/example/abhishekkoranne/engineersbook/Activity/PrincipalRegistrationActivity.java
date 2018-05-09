@@ -48,7 +48,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class PrincipalRegistrationActivity extends AppCompatActivity {
 //TODO:XML file context in jigish is StudentRegistration. Check if the changes done work or not
 
-    EditText et_first_name, et_last_name, et_college_website, et_tpo_name, et_tpo_contact_number, et_date_of_birth, et_address,
+    EditText et_first_name, et_last_name, et_col_id, et_col_name, et_college_website, et_tpo_name, et_tpo_contact_number, et_date_of_birth, et_address,
             et_contact_no, et_email, et_password, et_confirm_password;
 
     DisplayImageOptions options;
@@ -59,8 +59,8 @@ public class PrincipalRegistrationActivity extends AppCompatActivity {
     RadioGroup rg_gender;
     RadioButton rb_male, rb_female;
 
-    Spinner col_spin, univ_spin;
-    String gender = "0", c, u;
+    Spinner univ_spin;
+    String gender = "0", u;
 
     Uri imageUri;
 
@@ -80,15 +80,17 @@ public class PrincipalRegistrationActivity extends AppCompatActivity {
         et_email = (EditText) findViewById(R.id.et_email);
         et_password = (EditText) findViewById(R.id.et_password);
         et_confirm_password = (EditText) findViewById(R.id.et_confirm_password);
+        et_col_id = (EditText) findViewById(R.id.et_col_id);
+        et_col_name = (EditText) findViewById(R.id.et_col_name);
         et_college_website = (EditText) findViewById(R.id.et_college_website);
         et_tpo_name = (EditText) findViewById(R.id.et_tpo_name);
         et_tpo_contact_number = (EditText) findViewById(R.id.et_tpo_contact_number);
+
 
         rg_gender = (RadioGroup) findViewById(R.id.rg_gender);
         rb_male = (RadioButton) findViewById(R.id.rb_male);
         rb_female = (RadioButton) findViewById(R.id.rb_female);
 
-        col_spin = (Spinner) findViewById(R.id.col_spin);
         univ_spin = (Spinner) findViewById(R.id.univ_spin);
 
         options = new DisplayImageOptions.Builder().build();
@@ -102,14 +104,17 @@ public class PrincipalRegistrationActivity extends AppCompatActivity {
             }
         });
 
+/*
         String col[] = {"SVIT", "Parul", "GCET"};
         ArrayAdapter<String> adapt = new ArrayAdapter<String>(PrincipalRegistrationActivity.this, R.layout.spin_item, col);
         col_spin.setAdapter(adapt);
+*/
 
         String univ[] = {"GTU", "MHU", "DU"};
         ArrayAdapter<String> ad = new ArrayAdapter<String>(PrincipalRegistrationActivity.this, R.layout.spin_item, univ);
         univ_spin.setAdapter(ad);
 
+/*
         col_spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -121,6 +126,7 @@ public class PrincipalRegistrationActivity extends AppCompatActivity {
 
             }
         });
+*/
 
         univ_spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -217,12 +223,12 @@ public class PrincipalRegistrationActivity extends AppCompatActivity {
         partMap.put("website", RequestBody.create(MediaType.parse("text/plain"), et_college_website.getText().toString()));
         partMap.put("tponame", RequestBody.create(MediaType.parse("text/plain"), et_tpo_name.getText().toString()));
         partMap.put("tpono", RequestBody.create(MediaType.parse("text/plain"), et_tpo_contact_number.getText().toString()));
-
         partMap.put("dob", RequestBody.create(MediaType.parse("text/plain"), et_date_of_birth.getText().toString()));
         partMap.put("addr", RequestBody.create(MediaType.parse("text/plain"), et_address.getText().toString()));
         partMap.put("contact", RequestBody.create(MediaType.parse("text/plain"), et_contact_no.getText().toString()));
         partMap.put("email", RequestBody.create(MediaType.parse("text/plain"), et_email.getText().toString()));
-        partMap.put("colg_name", RequestBody.create(MediaType.parse("text/plain"), c));
+        partMap.put("colg_id", RequestBody.create(MediaType.parse("text/plain"), et_col_id.getText().toString()));
+        partMap.put("colg_name", RequestBody.create(MediaType.parse("text/plain"), et_col_name.getText().toString()));
         partMap.put("univ_name", RequestBody.create(MediaType.parse("text/plain"), u));
         partMap.put("pass", RequestBody.create(MediaType.parse("text/plain"), et_password.getText().toString()));
         partMap.put("user_type", RequestBody.create(MediaType.parse("text/plain"), "principal"));

@@ -322,6 +322,7 @@ public class StudentRegistrationActivity extends AppCompatActivity {
         partMap.put("interest", RequestBody.create(MediaType.parse("text/plain"), et_interests.getText().toString()));
         partMap.put("yop", RequestBody.create(MediaType.parse("text/plain"), et_year_of_passing.getText().toString()));
         partMap.put("pass", RequestBody.create(MediaType.parse("text/plain"), et_password.getText().toString()));
+        partMap.put("user_type", RequestBody.create(MediaType.parse("text/plain"), "student"));
 
 
 //        params.put("profile_pic", "");
