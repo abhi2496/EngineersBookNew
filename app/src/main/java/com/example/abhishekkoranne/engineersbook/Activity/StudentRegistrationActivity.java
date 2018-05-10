@@ -34,6 +34,7 @@ import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -302,6 +303,19 @@ public class StudentRegistrationActivity extends AppCompatActivity {
 //        Map<String, Object> params = new HashMap<>();
         Map<String, RequestBody> partMap = new HashMap<>();
         if (imageUri.getPath() != null && !imageUri.getPath().isEmpty()) {
+            InputStream inputStream;
+            try{
+                inputStream = getContentResolver().openInputStream(imageUri);
+                Bitmap image = BitmapFactory.decodeStream(inputStream);
+                //BaseImageDownloader.getStreamFromOtherSource(imageUri, )
+                img_preview.setImageBitmap(image);
+                img_preview.setVisibility(View.VISIBLE);
+            }
+            catch (Exception e)
+            {
+                Log.d("error","Set Image error: "+e.getMessage());
+            }
+
             File attachment = new File(imageUri.getPath());
             String fileName = attachment.getName();
             partMap.put("profile_pic" + "\" filename=\"" + fileName,

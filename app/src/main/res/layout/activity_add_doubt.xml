@@ -58,8 +58,10 @@
         android:layout_marginRight="16dp"
         android:layout_gravity="right"
         android:text="Add Image"
+        android:textStyle="bold"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:onClick="add_dbt_img"/>
 
     <Button
         android:layout_marginBottom="8dp"
@@ -71,6 +73,7 @@
         android:background="@drawable/rectangular_edit_text"
         android:text="Submit"
         android:textColor="#c51f2d80"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:onClick="addDoubt"/>
 
 </LinearLayout>
