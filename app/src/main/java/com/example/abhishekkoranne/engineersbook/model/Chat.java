@@ -1,8 +1,5 @@
 package com.example.abhishekkoranne.engineersbook.model;
 
-/**
- * Created by Abhishek Koranne on 22-03-2018.
- */
 
 public class Chat {
 

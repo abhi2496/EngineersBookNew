@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:background="#ffffff"
         android:orientation="vertical"
-        tools:context="com.example.abhishekkoranne.engineersbook.Activity.DoubtsQuestionActivity">
+        tools:context="com.example.jiggy.ab.Activity.DoubtsQuestionActivity">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,6 +28,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:onClick="upVote"
                     android:layout_width="match_parent"
                     android:layout_height="32dp"
                     android:layout_marginTop="8dp"

@@ -21,9 +21,7 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.ArrayList;
 
-/**
- * Created by Abhishek Koranne on 27-03-2018.
- */
+
 
 public class ApprovalAdapter extends RecyclerView.Adapter<ApprovalAdapter.ApprovalViewHolder> {
     Context cont;

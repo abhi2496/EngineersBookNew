@@ -5,12 +5,10 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,24 +16,18 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.abhishekkoranne.engineersbook.APIManager;
-import com.example.abhishekkoranne.engineersbook.Constant;
-import com.example.abhishekkoranne.engineersbook.R;
-import com.example.abhishekkoranne.engineersbook.Activity.AddArticleActivity;
 import com.example.abhishekkoranne.engineersbook.Activity.AddDoubtActivity;
 import com.example.abhishekkoranne.engineersbook.Adapter.DoubtsAdapter;
-import com.example.abhishekkoranne.engineersbook.model.Answer;
-import com.example.abhishekkoranne.engineersbook.model.Article;
+import com.example.abhishekkoranne.engineersbook.Constant;
+import com.example.abhishekkoranne.engineersbook.R;
 import com.example.abhishekkoranne.engineersbook.model.Doubt;
 import com.example.abhishekkoranne.engineersbook.model.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -72,6 +64,7 @@ public class DoubtsFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        doubtList.clear();
 
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -79,11 +72,12 @@ public class DoubtsFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+        Map<String, String> params = new HashMap<>();
 
         APIManager api = retrofit.create(APIManager.class);
         rv_doubts = (RecyclerView) getActivity().findViewById(R.id.rv_doubts);
         fab_ask_doubt = (FloatingActionButton) getActivity().findViewById(R.id.fab_ask_doubt);
-        fab_ask_doubt.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorFabBackground)));
+      //  fab_ask_doubt.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorFabBackground)));
         fab_ask_doubt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,66 +120,44 @@ public class DoubtsFragment extends Fragment {
                         JsonObject content = gson.fromJson(jsonString, JsonObject.class);
                         Log.d("error", "content: " + content);
 
-                        JsonArray doubtListArr = content.getAsJsonArray("Doubtlist");
-                        JsonArray userInfoArr = content.getAsJsonArray("correspondingUserInfo");
-
+                        JsonArray doubtListArr = content.getAsJsonArray("doubtlist");
+                        JsonArray userInfoArr = content.getAsJsonArray("UserInfo");
                         JsonArray numOfAnswersArr = content.getAsJsonArray("noOfCorrespondingAnswers");
-                        JsonElement[] elements = new JsonElement[doubtListArr.size()];
 
+                        String doubt, doubtHeading, doubtImageUrl, tags, firstName, lastName, profilePic;
+                        long timestamp;
+                        int doubtId, upVotes, downVotes, numberOfAnswers, userId;
 
-                        int doubtId[] = new int[doubtListArr.size()];
-                        String[] doubt = new String[doubtListArr.size()];
-                        String[] doubtHeading = new String[doubtListArr.size()];
-                        String[] doubtImageUrl = new String[doubtListArr.size()];
-                        int upVotes[] = new int[doubtListArr.size()];
-                        int downVotes[] = new int[doubtListArr.size()];
-                        long timestamp[] = new long[doubtListArr.size()];
-                        String[] tags = new String[doubtListArr.size()];
-
-
-                        int numberOfAnswers[] = new int[numOfAnswersArr.size()];
-
-
-                        String[] user_info = new String[userInfoArr.size()];
-                        String[] userId = new String[userInfoArr.size()];
-                        String[] firstName = new String[userInfoArr.size()];
-                        String[] lastName = new String[userInfoArr.size()];
-                        String[] profilePic = new String[userInfoArr.size()];
-                        String[] userData = new String[3];
+                        String[] userData;
 
 
                         for (int i = 0, n = doubtListArr.size(); i < n; i++) {
-                            user_info[i] = userInfoArr.get(i).getAsString();
-                            userData = user_info[i].split(",");
-                            userId[i] = userData[0];
-                            firstName[i] = userData[1];
-                            lastName[i] = userData[2];
-                            profilePic[i] = userData[3];
+                            userData = userInfoArr.get(i).getAsString().split(",");
+                            userId = Integer.parseInt(userData[0]);
+                            firstName = userData[1];
+                            lastName = userData[2];
+                            profilePic = userData[3];
 
 
-                            elements[i] = doubtListArr.get(i);
-                            doubtId[i] = elements[i].getAsJsonObject().get("doubtId").getAsInt();
-                            Log.d("errorDF", "DID:" + doubtId[i]);
-                            upVotes[i] = elements[i].getAsJsonObject().get("upvote").getAsInt();
-                            Log.d("errorDF", "DUV:" + upVotes[i]);
-                            downVotes[i] = elements[i].getAsJsonObject().get("downvote").getAsInt();
-                            Log.d("errorDF", "DDV:" + downVotes[i]);
-                            timestamp[i] = elements[i].getAsJsonObject().get("createTime").getAsLong();
+                            doubtId = doubtListArr.get(i).getAsJsonObject().get("doubtId").getAsInt();
+                            upVotes = doubtListArr.get(i).getAsJsonObject().get("upvote").getAsInt();
+                            downVotes = doubtListArr.get(i).getAsJsonObject().get("downvote").getAsInt();
+                            timestamp = doubtListArr.get(i).getAsJsonObject().get("createTime").getAsLong();
 
-                            numberOfAnswers[i] = numOfAnswersArr.get(i).getAsInt();
+                            numberOfAnswers = numOfAnswersArr.get(i).getAsInt();
 
-                            Log.d("errorDF", "NOA:" + numberOfAnswers[i]);
-                            tags[i] = elements[i].getAsJsonObject().get("tag").getAsString();
-                            doubt[i] = elements[i].getAsJsonObject().get("text").getAsString();
-                            doubtHeading[i] = elements[i].getAsJsonObject().get("heading").getAsString();
 
-                            if (elements[i].getAsJsonObject().get("doubtImage") != null) {
-                                doubtImageUrl[i] = elements[i].getAsJsonObject().get("doubtImage").getAsString();
+                            tags = doubtListArr.get(i).getAsJsonObject().get("tag").getAsString();
+                            doubt = doubtListArr.get(i).getAsJsonObject().get("text").getAsString();
+                            doubtHeading = doubtListArr.get(i).getAsJsonObject().get("heading").getAsString();
+
+                            if (doubtListArr.get(i).getAsJsonObject().get("doubtImage") != null) {
+                                doubtImageUrl = doubtListArr.get(i).getAsJsonObject().get("doubtImage").getAsString();
                             }
-
-                            doubtImageUrl[i] = null;
-                            usersList.add(new User(Integer.parseInt(userId[i]), profilePic[i], null, firstName[i], lastName[i], doubtImageUrl[i]));
-                            doubtList.add(new Doubt(timestamp[i], doubtId[i], doubt[i], doubtHeading[i], doubtImageUrl[i], upVotes[i], downVotes[i], usersList.get(i), numberOfAnswers[i], tags[i]));
+                            else{
+                            doubtImageUrl = null; }
+                            usersList.add(new User(userId, profilePic, null, firstName, lastName, doubtImageUrl));
+                            doubtList.add(new Doubt(timestamp, doubtId, doubt, doubtHeading, doubtImageUrl, upVotes, downVotes, usersList.get(i), numberOfAnswers, tags));
                         }
 
                         setAdapter();

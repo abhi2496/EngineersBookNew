@@ -3,26 +3,69 @@ package com.example.abhishekkoranne.engineersbook.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by Abhishek Koranne on 24-12-2017.
- */
-
 public class Comment implements Parcelable {
     private long time;
-    private int commentid;
+    private int commentId;
+    private int articleID;
     private String comment = "";
     private User user;
 
-    public Comment(long time, int commentid, String comment, User user) {
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
         this.time = time;
-        this.commentid = commentid;
+    }
+
+    public int getCommentId() {
+        return commentId;
+    }
+
+    public void setCommentId(int commentId) {
+        this.commentId = commentId;
+    }
+
+    public int getArticleID() {
+        return articleID;
+    }
+
+    public void setArticleID(int articleID) {
+        this.articleID = articleID;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public static Creator<Comment> getCREATOR() {
+        return CREATOR;
+    }
+
+    public Comment(long time, int commentId, int articleID, String comment, User user) {
+        this.time = time;
+        this.commentId = commentId;
+        this.articleID = articleID;
         this.comment = comment;
         this.user = user;
     }
 
     protected Comment(Parcel in) {
         time = in.readLong();
-        commentid = in.readInt();
+        commentId = in.readInt();
+        articleID = in.readInt();
         comment = in.readString();
         user = in.readParcelable(User.class.getClassLoader());
     }
@@ -30,7 +73,8 @@ public class Comment implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(time);
-        dest.writeInt(commentid);
+        dest.writeInt(commentId);
+        dest.writeInt(articleID);
         dest.writeString(comment);
         dest.writeParcelable(user, flags);
     }
@@ -51,36 +95,4 @@ public class Comment implements Parcelable {
             return new Comment[size];
         }
     };
-
-    public long getTime() {
-        return time;
-    }
-
-    public void setTime(long time) {
-        this.time = time;
-    }
-
-    public int getCommentid() {
-        return commentid;
-    }
-
-    public void setCommentid(int commentid) {
-        this.commentid = commentid;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }

@@ -1,10 +1,8 @@
 package com.example.abhishekkoranne.engineersbook.Fragment;
 
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -14,31 +12,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.abhishekkoranne.engineersbook.APIManager;
+import com.example.abhishekkoranne.engineersbook.Activity.AddArticleActivity;
+import com.example.abhishekkoranne.engineersbook.Adapter.ArticlesAdapter;
 import com.example.abhishekkoranne.engineersbook.Constant;
 import com.example.abhishekkoranne.engineersbook.R;
-import com.example.abhishekkoranne.engineersbook.Activity.AddArticleActivity;
-import com.example.abhishekkoranne.engineersbook.Activity.HomeActivity;
-import com.example.abhishekkoranne.engineersbook.Activity.LoginActivity;
-import com.example.abhishekkoranne.engineersbook.Adapter.ArticlesAdapter;
 import com.example.abhishekkoranne.engineersbook.model.Article;
-import com.example.abhishekkoranne.engineersbook.model.Comment;
-
 import com.example.abhishekkoranne.engineersbook.model.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -56,12 +44,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ArticlesFragment extends Fragment {
     RecyclerView rv_article;
     FloatingActionButton fab_add_article;
-    static int j = 0, i = 0;
-//    Button button_like;
-    int flag=0;
-    APIManager api;
-    Retrofit retrofit;
-
     /*String[] user_name;
     String[] time_stamp;
     String[] text_post;
@@ -69,12 +51,9 @@ public class ArticlesFragment extends Fragment {
     String[] no_of_shares;
     int[] images={R.drawable.img,R.drawable.jiggy};*/
 
-    JSONArray arr1 = new JSONArray();
-    ArrayList<Article> articleList = new ArrayList<>();
-//    ArrayList<Comment> commentList = new ArrayList<>();
 
-    // int[] comments;
-    int[] articleID;
+    ArrayList<Article> articlesList = new ArrayList<>();
+    ArrayList<User> usersList = new ArrayList<>();
 
     public ArticlesFragment() {
         // Required empty public constructor
@@ -93,11 +72,11 @@ public class ArticlesFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        articleList.clear();
-//        button_like = (Button) getActivity().findViewById(R.id.button_like);
+        articlesList.clear();
+
         rv_article = (RecyclerView) getActivity().findViewById(R.id.rv_article);
         fab_add_article = (FloatingActionButton) getActivity().findViewById(R.id.fab_add_article);
-        fab_add_article.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorFabBackground)));
+     //   fab_add_article.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorFabBackground)));
         fab_add_article.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,45 +84,18 @@ public class ArticlesFragment extends Fragment {
             }
         });
 
-
-        final Map<String, String> params = new HashMap<>();
-
-
-/*
-        button_like.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (flag==0)
-                {
-                    params.put("user_id", "1");
-                    params.put("type","up");
-                    flag=1;
-                }
-                else
-                {
-                    flag=0;
-                    params.put("user_id","1");
-                    params.put("type","down");
-                }
-                retrofit= new Retrofit.Builder()
-                        .baseUrl(Constant.BASE_URL)//base URL
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-                api=  retrofit.create(APIManager.class);
-                Call<Map<String, Object>> call=api.updatelikes(params);
-            }
-        });
-*/
-        retrofit= new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Constant.BASE_URL)//base URL
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        api=  retrofit.create(APIManager.class);
+
+        Map<String, String> params = new HashMap<>();
+
         params.put("user_id", "1");
         params.put("dept_id", "7");
 
         // Initializing APIManager
-
+        APIManager api = retrofit.create(APIManager.class);
         // TODO: Note: Replace 'getDetails(param)' API method for every new API here
         Call<Map<String, Object>> call = api.getArticle(0, 10);
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
@@ -184,42 +136,46 @@ public class ArticlesFragment extends Fragment {
 
                     Log.d("error", "content: " + content);
 
-                    JsonArray arr = content.getAsJsonArray("ArticleList");
-                    JsonArray numberOfCommmentsArr = content.getAsJsonArray("numberOfCommmentsList");
-                    int[] comments = new int[numberOfCommmentsArr.size()];
-                    articleID = new int[arr.size()];
+                    JsonArray articleListArr = content.getAsJsonArray("ArticleList");
+                    JsonArray numberOfCommentsArr = content.getAsJsonArray("numberOfCommmentsList");
+                    JsonArray userInfoArr = content.getAsJsonArray("UserInfo");
 
 
-                    //Log.d("errorJSarr1", "arr1: " + arr1.get(0).getAsInt());
+                    String articleImageUrl, articleText, firstName, lastName, profilePic;
+                    int articleId, likes, shares = 0, comments, articleType, userId;
+                    long timestamp;
 
-                    JsonElement[] elements = new JsonElement[arr.size()];
-                    //int[] commentElements = new int[arr1.size()];
-                    //  Log.d("errors", "cmmnt: " + arr1.get(0));
+                    String[] userData;
 
-                    String articleImage, articleText, deptId, articleType, createTime;
-                    int articleId, likes;
+                    for (int i = 0, m = articleListArr.size(); i < m; i++) {
 
-                    /*for (int j = 0, n = arr1.size(); j < n; j++) {
-                        commentElements[j] = arr1.get(j).getAsInt();
-                        Log.d("error", "cmmntsji: " + commentElements[j]);
-                    }*/
+                        userData = userInfoArr.get(i).getAsString().split(",");
+                        userId = Integer.parseInt(userData[0]);
+                        firstName = userData[1];
+                        lastName = userData[2];
 
-                    for (int i = 0, m = arr.size(); i < m; i++) {
-                        comments[i] = numberOfCommmentsArr.get(i).getAsInt();
-                        Log.d("error", "comments: " + comments[i]);
-                        elements[i] = arr.get(i);
-                        deptId = "" + elements[i].getAsJsonObject().get("deptId");
-                        articleId = elements[i].getAsJsonObject().get("articleId").getAsInt();
-                        likes = elements[i].getAsJsonObject().get("likes").getAsInt();
-                        articleType = "" + elements[i].getAsJsonObject().get("articleType");
-                        articleText = elements[i].getAsJsonObject().get("articleText").getAsString();
-                        articleImage = "" + elements[i].getAsJsonObject().get("articleImage");
-                        createTime = "" + elements[i].getAsJsonObject().get("createTime");
+                        if (userData[3] == null) {
+                            profilePic = null;
+                        } else {
+                            profilePic = userData[3];
+                        }
+                        articleId = articleListArr.get(i).getAsJsonObject().get("articleId").getAsInt();
+                        likes = articleListArr.get(i).getAsJsonObject().get("likes").getAsInt();
+                        articleType = articleListArr.get(i).getAsJsonObject().get("articleType").getAsInt();
+                        timestamp = articleListArr.get(i).getAsJsonObject().get("createTime").getAsLong();
 
-                        //      Log.d("errorID", "OBJ: " + elements[i].getAsJsonObject().get("articleId"));
+                        comments = numberOfCommentsArr.get(i).getAsInt();
 
+                        if (articleListArr.get(i).getAsJsonObject().get("articleImage") != null) {
+                            articleImageUrl = articleListArr.get(i).getAsJsonObject().get("articleImage").getAsString();
+                        } else {
+                            articleImageUrl = null;
+                        }
 
-                        displayArticles(deptId, comments[i], articleId, likes, articleType, articleText, articleImage, createTime, m);
+                        articleText = articleListArr.get(i).getAsJsonObject().get("articleText").getAsString();
+
+                        usersList.add(new User(userId, profilePic, null, firstName, lastName, null));
+                        articlesList.add(new Article(timestamp, articleId, articleText, articleImageUrl, likes, shares, articleType, comments, usersList.get(i)));
                     }
 
                     setAdapter();
@@ -343,9 +299,11 @@ public class ArticlesFragment extends Fragment {
                 "Hope you are doing well!" +
                 "Hope you are doing well!", "https://www.google.co.in/imgres?imgurl=https%3A%2F%2Fpbs.twimg.com%2Fprofile_images%2F1811310904%2Flogo100x100_SM_twitter_400x400.jpg&imgrefurl=https%3A%2F%2Ftwitter.com%2Fsomos100x100&docid=ZK72S9aXTiELUM&tbnid=-1E2q0TplBkcCM%3A&vet=10ahUKEwjRq9i2ybPYAhWMpY8KHffNBp0QMwg-KAAwAA..i&w=400&h=400&bih=653&biw=1517&q=images%20100x100&ved=0ahUKEwjRq9i2ybPYAhWMpY8KHffNBp0QMwg-KAAwAA&iact=mrc&uact=8", 10, 20, 30, user5, new ArrayList<Comment>()));
 */
+
+
     }
 
-    private void displayArticles(String deptId, int comment, int articleId, int likes, String articleType, String articleText, String articleImage, String createTime, int size) {
+    /*private void displayArticles(String deptId, int articleId, int likes, String articleType, String articleText, String articleImage, String createTime, int size) {
         if (i >= size) {
             i--;
         }
@@ -357,26 +315,21 @@ public class ArticlesFragment extends Fragment {
         User user3 = new User(3, "https://www.google.co.in/imgres?imgurl=https%3A%2F%2Fwww.internetvibes.net%2Fwp-content%2Fgallery%2Favatars%2F017.png&imgrefurl=https%3A%2F%2Fwww.internetvibes.net%2Fgallery%2Fnice-avatar-set-613-avatars-100x100%2F&docid=TOdPgfD5Tee_eM&tbnid=7fp-HioZO06DsM%3A&vet=10ahUKEwjRq9i2ybPYAhWMpY8KHffNBp0QMwhFKAcwBw..i&w=100&h=100&bih=653&biw=1517&q=images%20100x100&ved=0ahUKEwjRq9i2ybPYAhWMpY8KHffNBp0QMwhFKAcwBw&iact=mrc&uact=8", "abc@gmail.com", "Shabbir", "Bhaisaheb", "https://www.google.co.in/imgres?imgurl=https%3A%2F%2Fwww.internetvibes.net%2Fwp-content%2Fgallery%2Favatars%2F017.png&imgrefurl=https%3A%2F%2Fwww.internetvibes.net%2Fgallery%2Fnice-avatar-set-613-avatars-100x100%2F&docid=TOdPgfD5Tee_eM&tbnid=7fp-HioZO06DsM%3A&vet=10ahUKEwjRq9i2ybPYAhWMpY8KHffNBp0QMwhFKAcwBw..i&w=100&h=100&bih=653&biw=1517&q=images%20100x100&ved=0ahUKEwjRq9i2ybPYAhWMpY8KHffNBp0QMwhFKAcwBw&iact=mrc&uact=8");
         User user4 = new User(4, "ac@gmail.com", "abc@gmail.com", "Himalay", "Patel", "https://www.google.co.in/imgres?imgurl=https%3A%2F%2Fwww.internetvibes.net%2Fwp-content%2Fgallery%2Favatars%2F017.png&imgrefurl=https%3A%2F%2Fwww.internetvibes.net%2Fgallery%2Fnice-avatar-set-613-avatars-100x100%2F&docid=TOdPgfD5Tee_eM&tbnid=7fp-HioZO06DsM%3A&vet=10ahUKEwjRq9i2ybPYAhWMpY8KHffNBp0QMwhFKAcwBw..i&w=100&h=100&bih=653&biw=1517&q=images%20100x100&ved=0ahUKEwjRq9i2ybPYAhWMpY8KHffNBp0QMwhFKAcwBw&iact=mrc&uact=8");
         User user5 = new User(5, "bc@gmail.com", "abc@gmail.com", "NABDU", "Dot NET", "https://www.google.co.in/imgres?imgurl=https%3A%2F%2Fwww.internetvibes.net%2Fwp-content%2Fgallery%2Favatars%2F017.png&imgrefurl=https%3A%2F%2Fwww.internetvibes.net%2Fgallery%2Fnice-avatar-set-613-avatars-100x100%2F&docid=TOdPgfD5Tee_eM&tbnid=7fp-HioZO06DsM%3A&vet=10ahUKEwjRq9i2ybPYAhWMpY8KHffNBp0QMwhFKAcwBw..i&w=100&h=100&bih=653&biw=1517&q=images%20100x100&ved=0ahUKEwjRq9i2ybPYAhWMpY8KHffNBp0QMwhFKAcwBw&iact=mrc&uact=8");
-        /*commentList.add(new Comment(1000, 1, "This is comment 1", user1));
+        commentList.add(new Comment(1000, 1, "This is comment 1", user1));
         commentList.add(new Comment(2000, 2, "This is comment 2", user2));
         commentList.add(new Comment(3000, 3, "This is comment 3", user3));
         commentList.add(new Comment(4000, 4, "This is comment 4", user4));
-        commentList.add(new Comment(5000, 5, "This is comment 5", user5));*/
+        commentList.add(new Comment(5000, 5, "This is comment 5", user5));
 
-        articleList.add(new Article(1000, articleID[i], articleText, "https://www.google.co.in/imgres?imgurl=https%3A%2F%2Fpbs.twimg.com%2Fprofile_images%2F1811310904%2Flogo100x100_SM_twitter_400x400.jpg&imgrefurl=https%3A%2F%2Ftwitter.com%2Fsomos100x100&docid=ZK72S9aXTiELUM&tbnid=-1E2q0TplBkcCM%3A&vet=10ahUKEwjRq9i2ybPYAhWMpY8KHffNBp0QMwg-KAAwAA..i&w=400&h=400&bih=653&biw=1517&q=images%20100x100&ved=0ahUKEwjRq9i2ybPYAhWMpY8KHffNBp0QMwg-KAAwAA&iact=mrc&uact=8", likes, 20, user1, comment));
+        articleList.add(new Article(1000, articleID[i], articleText, "https://www.google.co.in/imgres?imgurl=https%3A%2F%2Fpbs.twimg.com%2Fprofile_images%2F1811310904%2Flogo100x100_SM_twitter_400x400.jpg&imgrefurl=https%3A%2F%2Ftwitter.com%2Fsomos100x100&docid=ZK72S9aXTiELUM&tbnid=-1E2q0TplBkcCM%3A&vet=10ahUKEwjRq9i2ybPYAhWMpY8KHffNBp0QMwg-KAAwAA..i&w=400&h=400&bih=653&biw=1517&q=images%20100x100&ved=0ahUKEwjRq9i2ybPYAhWMpY8KHffNBp0QMwg-KAAwAA&iact=mrc&uact=8", likes, 20, user1, commentList));
         i++;
-    }
+    }*/
 
     private void setAdapter() {
-        try {/*
-            for (int i = 0; i < comments.length; i++) {
-                Log.d("error", "CMMNT ARR" + comments[i]);
-            }*/
-            ArticlesAdapter adapt = new ArticlesAdapter(getActivity(), articleList);
-            rv_article.setAdapter(adapt);
-            rv_article.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        } catch (Exception e) {
-            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
+
+        ArticlesAdapter adapt = new ArticlesAdapter(getActivity(), articlesList);
+        rv_article.setAdapter(adapt);
+        rv_article.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+
     }
 }

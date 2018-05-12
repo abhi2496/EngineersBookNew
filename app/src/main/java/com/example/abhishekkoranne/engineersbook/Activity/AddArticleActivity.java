@@ -1,7 +1,9 @@
 package com.example.abhishekkoranne.engineersbook.Activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.app.ActionBar;
@@ -165,10 +167,14 @@ public class AddArticleActivity extends AppCompatActivity {
             partMap.put("user_id", RequestBody.create(MediaType.parse("text/plain"), "2"));
             partMap.put("articletype", RequestBody.create(MediaType.parse("text/plain"), "1"));
         } else {
+            SharedPreferences shad = getSharedPreferences("cookie", Context.MODE_PRIVATE);
+
+            // edit.putString("userId",Id);
+
             partMap.put("type", RequestBody.create(MediaType.parse("text/plain"), filter));
             partMap.put("text", RequestBody.create(MediaType.parse("text/plain"), text_post.getText().toString()));
             partMap.put("dept_id", RequestBody.create(MediaType.parse("text/plain"), "07"));
-            partMap.put("user_id", RequestBody.create(MediaType.parse("text/plain"), "2"));
+            partMap.put("user_id", RequestBody.create(MediaType.parse("text/plain"),  shad.getString("userId", "0")));
             partMap.put("articletype", RequestBody.create(MediaType.parse("text/plain"), "0"));
         }
 

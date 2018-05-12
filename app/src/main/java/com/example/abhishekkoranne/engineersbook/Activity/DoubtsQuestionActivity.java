@@ -31,6 +31,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -41,10 +42,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DoubtsQuestionActivity extends AppCompatActivity {
     ArrayList<Answer> answerList = new ArrayList<>();
-    ArrayList<User> usersList=new ArrayList<>();
+    ArrayList<User> usersList = new ArrayList<>();
     TextView no_of_upvotes, doubt_question, doubt_question_tag, doubt_question_detailed_form_text, no_of_answers;
     RecyclerView rv_doubt_question_answers;
     NestedScrollView sv_doubts_question;
+    Doubt doubt_object;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,7 @@ public class DoubtsQuestionActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         Intent ii = getIntent();
-        Doubt doubt_object = (Doubt) ii.getParcelableExtra("doubt_object");
+        doubt_object = (Doubt) ii.getParcelableExtra("doubt_object");
         String total_upvotes = "" + doubt_object.getUpVote();
         String doubt_quest = "" + doubt_object.getDoubtHeading();
         String doubtTag = doubt_object.getTag();
@@ -180,13 +182,13 @@ public class DoubtsQuestionActivity extends AppCompatActivity {
                             downVotes[i] = elements[i].getAsJsonObject().get("downvote").getAsInt();
                             timestamp[i] = elements[i].getAsJsonObject().get("createTime").getAsLong();
                             text[i] = elements[i].getAsJsonObject().get("text").getAsString();
-                            Log.d("ErrorText", "TEXT "+text[i]);
+                            Log.d("ErrorText", "TEXT " + text[i]);
 
-                            if(elements[i].getAsJsonObject().get("answerImage") != null) {
+                            if (elements[i].getAsJsonObject().get("answerImage") != null) {
                                 answerImageURL[i] = elements[i].getAsJsonObject().get("answerImage").getAsString();
                             }
-                            answerImageURL[i]=null;
-                           // Log.d("ErrorIMG", "IMG "+answerImageURL[i]);
+                            answerImageURL[i] = null;
+                            // Log.d("ErrorIMG", "IMG "+answerImageURL[i]);
                             usersList.add(new User(Integer.parseInt(userId[i]), profilePic[i], null, firstName[i], lastName[i], answerImageURL[i]));
                             answerList.add(new Answer(timestamp[i], doubtId[i], answerId[i], upVotes[i], downVotes[i], text[i], usersList.get(i)));
                         }
@@ -246,4 +248,65 @@ public class DoubtsQuestionActivity extends AppCompatActivity {
         return true;
     }
 
+    public void upVote(View view) {
+
+        //doubt_object.setUpVote(Integer.parseInt(no_of_upvotes.getText().toString())+1);
+        no_of_upvotes.setText(Integer.parseInt((no_of_upvotes.getText().toString()))+1+"");
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constant.BASE_URL) // Bas URL
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        // Sending param
+        Map<String, Object> params = new HashMap<>();
+        params.put("doubt_id", doubt_object.getDoubtId());
+        params.put("user_id", doubt_object.getUser().getUserId());
+
+        APIManager api = retrofit.create(APIManager.class);
+
+        Call<Map<String, Object>> call = api.sendUpvote(params);
+
+        final ProgressDialog progressDialog = new ProgressDialog(DoubtsQuestionActivity.this);
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.show();
+
+        call.enqueue(new Callback<Map<String, Object>>() {
+            @Override
+            public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
+                if (progressDialog != null && progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
+
+                try {
+                    // Read response as follow
+                    if (response != null && response.body() != null) {
+
+                        Log.d("Error", "onResponse: body: " + response.body());
+                        Gson gson = new Gson();
+                    } else {
+                        Toast.makeText(DoubtsQuestionActivity.this, "No response available.", Toast.LENGTH_SHORT).show();
+
+                        Log.d("Error", "No response available");
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(DoubtsQuestionActivity.this, "Error occurred.", Toast.LENGTH_SHORT).show();
+
+                    Log.d("Error", "Error in reading response: " + e.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+                if (progressDialog != null && progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
+
+                Toast.makeText(DoubtsQuestionActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+
+                Log.d("Error", "onFailure: " + t.getMessage());
+            }
+        });
+
+    }
 }

@@ -3,9 +3,7 @@ package com.example.abhishekkoranne.engineersbook.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by Abhishek Koranne on 24-12-2017.
- */
+
 
 public class Answer implements Parcelable {
     private long time;

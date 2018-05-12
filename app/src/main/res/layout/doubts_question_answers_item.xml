@@ -54,6 +54,22 @@
                 android:textSize="12sp" />
         </LinearLayout>
 
+        <Button
+            android:id="@+id/button_share"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="right|center"
+            android:layout_marginRight="2dp"
+            android:background="@drawable/button_white"
+            android:drawableLeft="@drawable/ic_share_indigo_900_18dp"
+            android:paddingBottom="4dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="4dp"
+            android:text="Share"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -65,11 +81,11 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:gravity="center_horizontal"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="8dp"
             android:background="@drawable/rounded_border_background_white"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
             android:paddingBottom="16dp"
             android:paddingLeft="8dp"
@@ -88,12 +104,12 @@
                 android:textSize="12sp" />
 
             <TextView
-                android:paddingBottom="2dp"
-                android:paddingRight="3dp"
                 android:id="@+id/no_of_upvotes"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:paddingBottom="2dp"
+                android:paddingRight="3dp"
                 android:text="2"
                 android:textColor="#000000"
                 android:textSize="16sp" />
@@ -145,47 +161,23 @@
                 android:drawableRight="@drawable/ic_arrow_drop_down_indigo_900_48dp" />
         </LinearLayout>-->
 
-        <LinearLayout
-            android:layout_marginLeft="2dp"
+
+        <TextView
+            android:id="@+id/tv_answer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="8dp">
-
-            <TextView
-                android:paddingLeft="2dp"
-                android:id="@+id/tv_answer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Answer to the Submit form details error in php ...!!!"
-                android:textColor="#000000"
-                android:textSize="14sp" />
-
-
-            <Button
-                android:id="@+id/button_share"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_gravity="right"
-                android:layout_marginTop="32dp"
-                android:background="@drawable/button_white"
-                android:drawableLeft="@drawable/ic_share_indigo_900_18dp"
-                android:paddingBottom="4dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="4dp"
-                android:text="Share"
-                android:textAllCaps="false"
-                android:textColor="@color/colorPrimary"
-                android:textSize="14sp" />
-        </LinearLayout>
+            android:paddingLeft="2dp"
+            android:text="Answer to the Submit form details error in php ...!!!"
+            android:textColor="#000000"
+            android:textSize="14sp" />
 
 
     </LinearLayout>
 
     <View
-        android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="2dp"
+        android:layout_marginTop="8dp"
         android:background="#ffffff"></View>
 
 

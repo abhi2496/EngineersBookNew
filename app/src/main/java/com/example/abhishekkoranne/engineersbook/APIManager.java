@@ -95,8 +95,29 @@ public interface APIManager {
     @POST(Constant.URL_ADD_ANSWER)
     Call<Map<String, RequestBody>> addanswer(@PartMap Map<String, RequestBody> partMap);
 
+    @FormUrlEncoded
     @POST(Constant.URL_UPDATE_LIKES)
-    Call<Map<String, Object>> updatelikes(@FieldMap Map<String, String> params);
-//    Call<Map<String, Object>> registerStudent(@Part("name") RequestBody name);
+    Call<Map<String, Object>> updateLikes(@FieldMap Map<String, Object> params);
+
+    @GET(Constant.URL_GET_PROFILE_DATA)
+    Call<Map<String, Object>> getProfileData(@Query("page") int page, @Query("size") int size);
+
+    @FormUrlEncoded
+    @POST(Constant.URL_GET_NETWORKLIST)
+    Call<Map<String, Object>> getnetworklist(@FieldMap Map<String, Object> params);
+
+    @FormUrlEncoded
+    @POST(Constant.URL_GET_PLACED_STUD_DATA)
+    Call<Map<String, Object>> getPlacedStudList(@FieldMap Map<String, Object> params);
+
+    @FormUrlEncoded
+    @POST(Constant.URL_UPVOTE)
+    Call<Map<String, Object>> sendUpvote(@FieldMap Map<String, Object> params);
+
+    @FormUrlEncoded
+    @POST(Constant.URL_DOWNVOTE)
+    Call<Map<String, Object>> sendDownvote(@FieldMap Map<String, Object> params);
+
+    //    Call<Map<String, Object>> registerStudent(@Part("name") RequestBody name);
     // Add all your api calls here...
 }

@@ -5,9 +5,7 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 
-/**
- * Created by Abhishek Koranne on 24-12-2017.
- */
+
 
 //alt-shift-ins for getter nd setter
 

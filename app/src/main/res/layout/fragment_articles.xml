@@ -18,8 +18,10 @@
         android:layout_marginRight="16dp"
         app:fabSize="normal"
         android:src="@drawable/ic_add_white_18dp"
-        app:rippleColor="#2c7ea7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+<!--    android:src="@drawable/ic_add_white_18dp"
+    android:backgroundTint="@color/colorFabBackground"
+    app:rippleColor="#2c7ea7"-->
 </RelativeLayout>

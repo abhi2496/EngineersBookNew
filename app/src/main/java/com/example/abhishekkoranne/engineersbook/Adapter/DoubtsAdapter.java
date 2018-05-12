@@ -27,9 +27,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * Created by Abhishek Koranne on 06-12-2017.
- */
 
 public class DoubtsAdapter extends RecyclerView.Adapter<DoubtsAdapter.DoubtsViewHolder> {
 
@@ -88,7 +85,7 @@ public class DoubtsAdapter extends RecyclerView.Adapter<DoubtsAdapter.DoubtsView
                 }
             });
         }
-        holder.profile_pic.setImageResource(R.drawable.ic_person_blue_a700_18dp);
+        holder.profile_pic.setImageResource(R.drawable.ic_person_blue_700_18dp);
 
         holder.user_name.setText(doubtList.get(position).getUser().getFirstName().toString() + " " + doubtList.get(position).getUser().getLastName().toString());
         holder.timestamp.setText(strDate);

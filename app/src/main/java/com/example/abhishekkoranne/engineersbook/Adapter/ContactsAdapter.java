@@ -22,9 +22,6 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.ArrayList;
 
-/**
- * Created by Abhishek Koranne on 28-03-2018.
- */
 
 public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ContactsViewHolder> {
     Context cont;
@@ -47,7 +44,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
     }
 
     @Override
-    public void onBindViewHolder(ContactsAdapter.ContactsViewHolder holder, final int position) {
+    public void onBindViewHolder(final ContactsAdapter.ContactsViewHolder holder, final int position) {
         String userName=usersList.get(position).getFirstName().toString()+" "+usersList.get(position).getLastName().toString();
         holder.user_name.setText(userName);
         imgloader.displayImage("https://goo.gl/images/4BDHri", holder.profile_pic, new ImageLoadingListener() {
@@ -75,6 +72,20 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
             @Override
             public void onClick(View v) {
                 Intent ii = new Intent(cont, ChatActivity.class);
+                // TODO: 10-05-2018 send user id here
+                if(holder.getAdapterPosition()==0)
+                {
+                    ii.putExtra("otheruser",2);
+                }
+                else if (holder.getAdapterPosition()==1)
+                {
+                    ii.putExtra("otheruser",3);
+                }
+                else if (holder.getAdapterPosition()==2)
+                {
+                    ii.putExtra("otheruser",4);
+                }
+                //holder.getAdapterPosition()
                 cont.startActivity(ii);
             }
         });
@@ -93,7 +104,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.Contac
             super(itemView);
             user_name = (TextView) itemView.findViewById(R.id.user_name);
             profile_pic = (ImageView) itemView.findViewById(R.id.profile_pic);
-            layout_contacts_item=itemView.findViewById(R.id.layout_contacts_item);
+            layout_contacts_item= (LinearLayout) itemView.findViewById(R.id.layout_contacts_item);
         }
     }
 }

@@ -197,10 +197,8 @@ public class StudentRegistrationActivity extends AppCompatActivity {
 
     public void openGallery() {
         //invoke image galery using implcit intent
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        CropImage.activity()
-                .setGuidelines(CropImageView.Guidelines.ON)
-                .start(this);
+       // Intent intent = new Intent(Intent.ACTION_PICK);
+
         /*CropImage.activity()
                 .start(this);
 */
@@ -213,11 +211,14 @@ public class StudentRegistrationActivity extends AppCompatActivity {
         intent.setDataAndType(data, "image*//*");
 */
         //we will invoke this activity and get something back
-        startActivityForResult(intent, 20);
+        //startActivityForResult(intent, 20);
 /*        intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);                     //ACTION_GET_CONTENT
         startActivityForResult(Intent.createChooser(intent,
                 "Select file to upload "), req_code);*/
+        CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .start(this);
     }
 
     @Override
@@ -227,28 +228,47 @@ public class StudentRegistrationActivity extends AppCompatActivity {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
-                imageUri = result.getUri();
-                imgloader.displayImage(imageUri.getPath(), img_preview, new ImageLoadingListener() {
-                    @Override
-                    public void onLoadingStarted(String imageUri, View view) {
+                try {
+                    InputStream  inputStream = getContentResolver().openInputStream(imageUri);
+                    Bitmap image = BitmapFactory.decodeStream(inputStream);
 
-                    }
+                    img_preview.setImageBitmap(image);
+                    img_preview.setVisibility(View.VISIBLE);
 
-                    @Override
-                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+//                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//                    image.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+//
+//                  byte[]  imgbyte = byteArrayOutputStream.toByteArray();
 
-                    }
 
-                    @Override
-                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                } catch (Exception e) {
+                    Log.d("error", "File error: " + e.getStackTrace());
+                    Toast.makeText(this, "Unable to open image", Toast.LENGTH_SHORT).show();
+                }
 
-                    }
 
-                    @Override
-                    public void onLoadingCancelled(String imageUri, View view) {
-
-                    }
-                });
+//                imageUri = result.getUri();
+//                imgloader.displayImage(imageUri.getPath(), img_preview, new ImageLoadingListener() {
+//                    @Override
+//                    public void onLoadingStarted(String imageUri, View view) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onLoadingCancelled(String imageUri, View view) {
+//
+//                    }
+//                });
                // cropImageView.setImageUriAsync(imageUri);
                 //cropImageView.getCroppedImageAsync();
                 Log.d("error", "imageUri: " + imageUri);

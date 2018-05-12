@@ -112,11 +112,13 @@ public class LoginActivity extends Activity {
                             Toast.makeText(LoginActivity.this, "" + mssg, Toast.LENGTH_SHORT).show();
                         } else {
                             SharedPreferences shad = getSharedPreferences("cookie", Context.MODE_PRIVATE);
+                            String userId=shad.getString("userId","0");
                             String userType=shad.getString("userType","notype");
-                            String userId=shad.getString("userId","nouser");
+                            String deptId=shad.getString("deptId","0");
 
                             String Type=""+res.getAsJsonObject().get("userType");
                             String Id=""+res.getAsJsonObject().get("userId");
+
 
                             if(userType.equals("notype") || userId.equals("nouser"))
                             {

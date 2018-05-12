@@ -22,9 +22,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * Created by Abhishek Koranne on 24-03-2018.
- */
 
 public class ArticleCommentsAdapter extends RecyclerView.Adapter<ArticleCommentsAdapter.ArticleCommentsViewHolder> {
     Context cont;
@@ -48,27 +45,35 @@ public class ArticleCommentsAdapter extends RecyclerView.Adapter<ArticleComments
 
     @Override
     public void onBindViewHolder(ArticleCommentsViewHolder holder, int position) {
-        imgloader.displayImage("https://www.google.co.in/imgres?imgurl=https%3A%2F%2Fpbs.twimg.com%2Fprofile_images%2F1811310904%2Flogo100x100_SM_twitter_400x400.jpg&imgrefurl=https%3A%2F%2Ftwitter.com%2Fsomos100x100&docid=ZK72S9aXTiELUM&tbnid=-1E2q0TplBkcCM%3A&vet=10ahUKEwjRq9i2ybPYAhWMpY8KHffNBp0QMwg-KAAwAA..i&w=400&h=400&bih=653&biw=1517&q=images%20100x100&ved=0ahUKEwjRq9i2ybPYAhWMpY8KHffNBp0QMwg-KAAwAA&iact=mrc&uact=8", holder.profile_pic, new ImageLoadingListener() {
-            @Override
-            public void onLoadingStarted(String imageUri, View view) {
 
-            }
+        String userProfilePic = commentsList.get(position).getUser().getUserImageUrl();
 
-            @Override
-            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+        if (userProfilePic != null) {
 
-            }
+            imgloader.displayImage("https://www.google.co.in/imgres?imgurl=https%3A%2F%2Fpbs.twimg.com%2Fprofile_images%2F1811310904%2Flogo100x100_SM_twitter_400x400.jpg&imgrefurl=https%3A%2F%2Ftwitter.com%2Fsomos100x100&docid=ZK72S9aXTiELUM&tbnid=-1E2q0TplBkcCM%3A&vet=10ahUKEwjRq9i2ybPYAhWMpY8KHffNBp0QMwg-KAAwAA..i&w=400&h=400&bih=653&biw=1517&q=images%20100x100&ved=0ahUKEwjRq9i2ybPYAhWMpY8KHffNBp0QMwg-KAAwAA&iact=mrc&uact=8", holder.profile_pic, new ImageLoadingListener() {
+                @Override
+                public void onLoadingStarted(String imageUri, View view) {
 
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                }
 
-            }
+                @Override
+                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
 
-            @Override
-            public void onLoadingCancelled(String imageUri, View view) {
+                }
 
-            }
-        });
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+
+                }
+
+                @Override
+                public void onLoadingCancelled(String imageUri, View view) {
+
+                }
+            });
+        }
+
+        holder.profile_pic.setImageResource(R.drawable.ic_person_blue_700_18dp);
 
 
         Date date = new Date(commentsList.get(position).getTime());

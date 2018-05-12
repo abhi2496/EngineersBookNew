@@ -3,9 +3,7 @@ package com.example.abhishekkoranne.engineersbook.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by Abhishek Koranne on 22-03-2018.
- */
+
 
 public class Login implements Parcelable
 {

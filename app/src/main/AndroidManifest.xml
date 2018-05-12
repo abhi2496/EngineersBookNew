@@ -3,7 +3,7 @@
     package="com.example.abhishekkoranne.engineersbook">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme">
 
         <!-- <activity android:name=".Activity.LoginActivity"> -->
-        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"/>
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" />
         <activity
             android:name=".Activity.LoginActivity"
             android:screenOrientation="portrait"></activity>
@@ -57,13 +57,11 @@
             android:name=".Activity.HomeActivity"
             android:windowSoftInputMode="adjustPan">
 
-            <!--
-                            <intent-filter>
-                            <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-                            <category android:name="android.intent.category.LAUNCHER" />
-                        </intent-filter>
-            -->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".Activity.ChancellorRegistrationActivity"
@@ -102,13 +100,15 @@
             android:name=".Activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                        <intent-filter>
+                            <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+                            <category android:name="android.intent.category.LAUNCHER" />
+                        </intent-filter>
         </activity>
         <activity android:name=".Activity.ForgotPasswordTokenActivity"></activity>
+        <activity android:name=".Activity.ContactsInNetworkActivity" />
+        <activity android:name=".Activity.DisapprovalActivity"></activity>
     </application>
 
 </manifest>

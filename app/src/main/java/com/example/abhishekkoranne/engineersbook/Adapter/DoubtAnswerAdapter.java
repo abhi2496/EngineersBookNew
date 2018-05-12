@@ -10,9 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.abhishekkoranne.engineersbook.R;
-import com.example.abhishekkoranne.engineersbook.Activity.DoubtsQuestionActivity;
 import com.example.abhishekkoranne.engineersbook.Activity.ProfileActivity;
+import com.example.abhishekkoranne.engineersbook.R;
 import com.example.abhishekkoranne.engineersbook.model.Answer;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -23,9 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * Created by Abhishek Koranne on 06-01-2018.
- */
+
 
 public class DoubtAnswerAdapter extends RecyclerView.Adapter<DoubtAnswerAdapter.DoubtAnswerViewHolder> {
     Context cont;
@@ -50,28 +47,32 @@ public class DoubtAnswerAdapter extends RecyclerView.Adapter<DoubtAnswerAdapter.
     @Override
     public void onBindViewHolder(DoubtAnswerViewHolder holder, int position) {
 
-        imgloader.displayImage("https://goo.gl/images/4BDHri", holder.profile_pic, new ImageLoadingListener() {
-            @Override
-            public void onLoadingStarted(String imageUri, View view) {
+        String userProfilePic=answerList.get(position).getUser().getUserImageUrl();
 
-            }
+        if (userProfilePic != null) {
+            imgloader.displayImage("https://goo.gl/images/4BDHri", holder.profile_pic, new ImageLoadingListener() {
+                @Override
+                public void onLoadingStarted(String imageUri, View view) {
 
-            @Override
-            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                }
 
-            }
+                @Override
+                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
 
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                }
 
-            }
+                @Override
+                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
 
-            @Override
-            public void onLoadingCancelled(String imageUri, View view) {
+                }
 
-            }
-        });
+                @Override
+                public void onLoadingCancelled(String imageUri, View view) {
 
+                }
+            });
+
+        }
         Date date = new Date(answerList.get(position).getTime());
         SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         String strDate = formatter.format(date);
