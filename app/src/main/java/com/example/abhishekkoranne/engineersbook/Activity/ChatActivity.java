@@ -43,14 +43,14 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        rvchat=findViewById(R.id.rvchat);
+        rvchat = findViewById(R.id.rvchat);
 
         adapt = new ChatAdapter(this, chatList, myUserId, otherUserId);
         rvchat.setAdapter(adapt);
         rvchat.setLayoutManager(new LinearLayoutManager(this));
 
-        etmsg=(EditText)findViewById(R.id.etmsg);
-        send=(ImageButton)findViewById(R.id.send);
+        etmsg = (EditText) findViewById(R.id.etmsg);
+        send = (ImageButton) findViewById(R.id.send);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -88,13 +88,10 @@ public class ChatActivity extends AppCompatActivity {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(etmsg.getText().equals(""))
-                {
+                if (etmsg.getText().equals("")) {
                     Toast.makeText(ChatActivity.this, "Please Enter some Message!", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    timestamp=  Calendar.getInstance().getTimeInMillis();
+                } else {
+                    timestamp = Calendar.getInstance().getTimeInMillis();
                     Chat chat = new Chat(myUserId, etmsg.getText().toString().trim(), timestamp);
 
                     myRef.child(getUserIdNode(myUserId, otherUserId))
