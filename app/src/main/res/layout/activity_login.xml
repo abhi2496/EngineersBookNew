@@ -27,7 +27,7 @@
         android:layout_marginTop="10dp"
         android:singleLine="true"
         android:imeOptions="actionNext"
-        android:text="abhi@gmail.com"
+        android:text="abhishekkoranne@gmail.com"
         android:hint="Email"
         android:textColorLink="@color/colorPrimary"
         android:textSize="20sp" />

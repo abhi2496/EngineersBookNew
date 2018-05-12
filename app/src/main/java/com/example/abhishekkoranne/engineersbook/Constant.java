@@ -26,7 +26,10 @@ public class Constant {
     public static final String URL_FORGOT_PASS = "user/forgotpassword/";
     public static final String URL_FORGOT_PASS_TOKEN = "user/checktoken";
     public static final String URL_ADD_ANSWER = "user/addanswer";
+    public static final String URL_ADD_DOUBT = "user/adddoubt/";
+    public static final String URL_ADD_COMMENT = "user/addcomment/";
     public static final String URL_UPDATE_LIKES = "user/updatelikes";
+    public static final String URL_ADD_ARTICLE="user/addarticle/";
 
     //public static final String URL_GET_COMMENTS = "user/getcomment/"+articleID+"/";
     // public static final String URL_GET_ANSWERS = "user/getanswer/";

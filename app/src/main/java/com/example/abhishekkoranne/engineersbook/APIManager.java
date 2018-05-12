@@ -39,6 +39,18 @@ public interface APIManager {
 //    @GET("/getarticle/1/7")
 //    Map<String, Object> getArticles(@Query("page") int page, @Query("size") int size, Callback<Map<String, Object>> callback);
 
+    @Multipart
+    @POST(Constant.URL_ADD_ARTICLE)
+    Call<Map<String, Object>> addarticles(@PartMap Map<String, RequestBody> partMap);
+
+    @Multipart
+    @POST(Constant.URL_ADD_DOUBT)
+    Call<Map<String, Object>> adddoubt(@PartMap Map<String, RequestBody> partMap);
+
+    @FormUrlEncoded
+    @POST(Constant.URL_ADD_COMMENT)
+    Call<Map<String, Object>> addcomment(@FieldMap Map<String, String> params);
+
     @GET(Constant.URL_GET_ARTICLES)
     Call<Map<String, Object>> getArticle(@Query("page") int page, @Query("size") int size);
 

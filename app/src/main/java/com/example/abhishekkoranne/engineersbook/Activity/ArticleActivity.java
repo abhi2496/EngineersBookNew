@@ -1,7 +1,9 @@
 package com.example.abhishekkoranne.engineersbook.Activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
@@ -37,6 +39,7 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -276,10 +279,109 @@ public class ArticleActivity extends AppCompatActivity {
     }
 
     public void addComment(View view) {
-        String comment = et_add_comment.getText().toString().trim();
-        if (comment.length() != 0) {
+        String commentText = et_add_comment.getText().toString().trim();
+        if (commentText.length() != 0) {/*
             User user6 = new User(5, "bc@gmail.com", "abc@gmail.com", "NABDU", "Dot NET", "https://www.google.co.in/imgres?imgurl=https%3A%2F%2Fwww.internetvibes.net%2Fwp-content%2Fgallery%2Favatars%2F017.png&imgrefurl=https%3A%2F%2Fwww.internetvibes.net%2Fgallery%2Fnice-avatar-set-613-avatars-100x100%2F&docid=TOdPgfD5Tee_eM&tbnid=7fp-HioZO06DsM%3A&vet=10ahUKEwjRq9i2ybPYAhWMpY8KHffNBp0QMwhFKAcwBw..i&w=100&h=100&bih=653&biw=1517&q=images%20100x100&ved=0ahUKEwjRq9i2ybPYAhWMpY8KHffNBp0QMwhFKAcwBw&iact=mrc&uact=8");
-            articleCommentsList.add(new Comment(5000, 5, comment, user6));
+            articleCommentsList.add(new Comment(5000, 5, comment, user6));*/
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(Constant.BASE_URL) // Bas URL
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+            Map<String, String> params = new HashMap<>();
+
+            params.put("text",et_add_comment.getText().toString());
+            params.put("article_id","1");
+            params.put("user_id","2");
+
+            APIManager api = retrofit.create(APIManager.class);
+
+            Call<Map<String, Object>> call = api.addcomment(params);
+
+            final ProgressDialog progressDialog = new ProgressDialog(ArticleActivity.this);
+            progressDialog.setMessage("Please Wait...");
+            progressDialog.show();
+
+            call.enqueue(new Callback<Map<String, Object>>() {
+                @Override
+                public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
+                    if (progressDialog != null && progressDialog.isShowing()) {
+                        progressDialog.dismiss();
+                    }
+
+                    try {
+                        // Read response as follow
+                        if (response != null && response.body() != null) {
+
+                            Log.d("Error", "onResponse: body: " + response.body());
+                            Gson gson = new Gson();
+                            // Read response as follow
+                            Map<String, Object> map = response.body();
+                            String jsonString = gson.toJson(map);
+                            Log.d("error", "jsonString: " + jsonString);
+
+                            JsonObject content = gson.fromJson(jsonString, JsonObject.class);
+
+                            Log.d("error", "content: " + content);
+                            JsonElement res = content.get("response");
+                            JsonElement mes = content.get("message");
+                            Boolean resp = res.getAsJsonObject().get("response").getAsBoolean();
+                            String mssg = "" + res.getAsJsonObject().get("message");
+                            Log.d("error", "resp:" + resp);
+                            Log.d("error", "mes:" + mes);
+
+                            if (resp==false) {
+                                Toast.makeText(ArticleActivity.this, "" + mssg, Toast.LENGTH_SHORT).show();
+                            } else {
+                                SharedPreferences shad = getSharedPreferences("cookie", Context.MODE_PRIVATE);
+                                String userType=shad.getString("userType","notype");
+                                String userId=shad.getString("userId","nouser");
+
+                                String Type=""+res.getAsJsonObject().get("userType");
+                                String Id=""+res.getAsJsonObject().get("userId");
+
+                                if(userType.equals("notype") || userId.equals("nouser"))
+                                {
+                                    SharedPreferences.Editor edit=shad.edit();
+                                    edit.putString("userType",Type);
+                                    edit.putString("userId",Id);
+                                    edit.commit();
+                                }
+
+                                startActivity(new Intent(ArticleActivity.this, HomeActivity.class));
+                            }
+
+                            //content.get("email").getAsString();
+                            //content.get("password").getAsString();
+
+                            // Convert JSONArray to your custom model class list as follow
+
+                            //new TypeToken<List<YourModelClass>>(){}.getType());
+                        } else {
+                            Toast.makeText(ArticleActivity.this, "No response available.", Toast.LENGTH_SHORT).show();
+
+                            Log.d("Error", "No response available");
+                        }
+                    } catch (Exception e) {
+                        Toast.makeText(ArticleActivity.this, "Error occurred.", Toast.LENGTH_SHORT).show();
+
+                        Log.d("Error", "Error in reading response: " + e.getMessage());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+                    if (progressDialog != null && progressDialog.isShowing()) {
+                        progressDialog.dismiss();
+                    }
+
+                    Toast.makeText(ArticleActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+
+                    Log.d("Error", "onFailure: " + t.getMessage());
+                }
+            });
+
+
             if (adapt != null) {
                 adapt.notifyDataSetChanged();
             }

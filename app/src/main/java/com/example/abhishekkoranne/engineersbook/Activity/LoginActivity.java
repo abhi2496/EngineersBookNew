@@ -107,11 +107,24 @@ public class LoginActivity extends Activity {
                         String mssg = "" + res.getAsJsonObject().get("message");
                         Log.d("error", "resp:" + resp);
                         Log.d("error", "mes:" + mes);
+
                         if (resp==false) {
                             Toast.makeText(LoginActivity.this, "" + mssg, Toast.LENGTH_SHORT).show();
                         } else {
                             SharedPreferences shad = getSharedPreferences("cookie", Context.MODE_PRIVATE);
+                            String userType=shad.getString("userType","notype");
+                            String userId=shad.getString("userId","nouser");
 
+                            String Type=""+res.getAsJsonObject().get("userType");
+                            String Id=""+res.getAsJsonObject().get("userId");
+
+                            if(userType.equals("notype") || userId.equals("nouser"))
+                            {
+                                SharedPreferences.Editor edit=shad.edit();
+                                edit.putString("userType",Type);
+                                edit.putString("userId",Id);
+                                edit.commit();
+                            }
 
                             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                         }
@@ -234,7 +247,7 @@ public class LoginActivity extends Activity {
         startActivity(new Intent(LoginActivity.this, CompanyLoginActivity.class));
     }
 
-    public void onLoginClick(View view) {
+   // public void onLoginClick(View view) {
 //        tv_uname_err.setVisibility(View.GONE);
 //        tv_password_err.setVisibility(View.GONE);
 //
@@ -266,5 +279,5 @@ public class LoginActivity extends Activity {
 //            tv_uname_err.setVisibility(View.VISIBLE);
 //            tv_password_err.setVisibility(View.VISIBLE);
 //        }
-    }
+    //}
 }
